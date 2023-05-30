@@ -51,6 +51,13 @@ Options:
 - https://www.reddit.com/r/beeper/comments/13vol68/i_built_a_beeper_password_reset_tool_for_login/
 - https://news.ycombinator.com/item?id=36123896
 
+## Libs / Dependencies
+
+- https://github.com/yargs/yargs
+- https://github.com/terkelg/prompts
+- https://github.com/node-fetch/node-fetch
+- https://github.com/esbuild-kit/tsx
+
 ## Background Context
 
 ### Summarised Notes / Process (and ChatGPT Prompts)
