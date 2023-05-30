@@ -2,6 +2,10 @@
 
 Proof of Concept (PoC) script implementing JWT / email-code based password reset flow for Beeper / Matrix.
 
+## Warning
+
+**WARNING:** Use this at your own risk, there might be bugs; if the flows aren't implemented correctly you may end up logging out all of your existing devices, and if you haven't backed up your encryption keys you may lose access to your encrypted messages. You use this tool at your own risk.
+
 ## Usage
 
 First you will need to run:
