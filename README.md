@@ -4,6 +4,42 @@ Proof of Concept (PoC) script implementing JWT / email-code based password reset
 
 ## Usage
 
+First you will need to run:
+
+```shell
+npm install
+```
+
+Then you can use the script as follows:
+
+```shell
+./beeper-password-reset --help
+
+./beeper-password-reset --version 
+
+./beeper-password-reset login-email --email user@example.com
+
+./beeper-password-reset login-token --token jwtToken123
+
+./beeper-password-reset reset-password --access_token accessToken123 --jwt_token jwtToken123 --new_password newPassword123
+```
+
+Output from `./beeper-password-reset --help`:
+
+```shell
+⇒ ./beeper-password-reset.ts --help
+beeper-password-reset.ts <command>
+
+Commands:
+  beeper-password-reset.ts login-email     Login with email
+  beeper-password-reset.ts login-token     Login with JWT token
+  beeper-password-reset.ts reset-password  Reset password
+
+Options:
+  --version  Show version number                                       [boolean]
+  --help     Show help                                                 [boolean]
+```
+
 ## Background Context
 
 ### Summarised Notes / Process (and ChatGPT Prompts)
