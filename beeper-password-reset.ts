@@ -20,9 +20,9 @@ async function debugFetch(url: string, options: any) {
 
 const fetch = DEBUG ? debugFetch : originalFetch;
 
-async function loginWithEmail(email?: string) {
-  email =
-    email ||
+async function loginWithEmail(_email?: string) {
+  const email =
+    _email ??
     (
       await prompts({
         type: "text",
@@ -31,33 +31,51 @@ async function loginWithEmail(email?: string) {
       })
     ).email;
 
-  let resp = await fetch("https://api.beeper.com/user/login", {
-    method: "POST",
-    body: JSON.stringify({}),
-  });
-  let data = await resp.json();
-  let request = data.request;
+  if (!email) throw new Error("Email is required");
 
-  resp = await fetch("https://api.beeper.com/user/login/email", {
+  const loginResponse = await fetch("https://api.beeper.com/user/login", {
     method: "POST",
-    body: JSON.stringify({ request: request, email: email }),
+    headers: {
+      Authorization: "Bearer BEEPER-PRIVATE-API-PLEASE-DONT-USE",
+    },
+  });
+  const { request } = await loginResponse.json();
+
+  if (!request)
+    throw new Error("JSON response object missing required 'request' key");
+
+  await fetch("https://api.beeper.com/user/login/email", {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer BEEPER-PRIVATE-API-PLEASE-DONT-USE",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ request, email }),
   });
 
   const code = (
     await prompts({
       type: "text",
       name: "code",
-      message: "Enter the code sent to your email:",
+      message: "Enter the challenge code sent to your email:",
     })
   ).code;
 
-  resp = await fetch("https://api.beeper.com/user/login/response", {
-    method: "POST",
-    body: JSON.stringify({ request: request, response: code }),
-  });
+  if (!code) throw new Error("Code is required");
 
-  data = await resp.json();
-  const token = data.token;
+  const loginChallengeResponse = await fetch(
+    "https://api.beeper.com/user/login/response",
+    {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer BEEPER-PRIVATE-API-PLEASE-DONT-USE",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ request, response: code }),
+    }
+  );
+  const { token } = await loginChallengeResponse.json();
+
   console.log("Your JWT Token: ", token);
 }
 

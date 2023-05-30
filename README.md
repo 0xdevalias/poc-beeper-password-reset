@@ -58,11 +58,11 @@ Write me a basic typescript CLI app that implements 3 seperate flows/commands. T
 The first flow allows logging in with an email address and code sent to the email:
 
 - ask the user for their email address (if not already read from CLI params)
-- send a POST to https://api.beeper.com/user/login with an empty body
+- send a POST to https://api.beeper.com/user/login with an empty body and `Authorization: "Bearer BEEPER-PRIVATE-API-PLEASE-DONT-USE"` header
 - extract the `request` param from that response and display it to the user
-- send a POST to https://api.beeper.com/user/login/email with the extracted request + email in the body `{"request":"REDACTED","email":"REDACTED"}`
+- send a POST to https://api.beeper.com/user/login/email with the extracted request + email in the body `{"request":"REDACTED","email":"REDACTED"}` + `Authorization: "Bearer BEEPER-PRIVATE-API-PLEASE-DONT-USE"` header
 - ask the user for the code sent to their email address
-- send a POST to https://api.beeper.com/user/login/response with the request + code from email: `{"request":"REDACTED","response":"REDACTED-code-from-email"}`
+- send a POST to https://api.beeper.com/user/login/response with the request + code from email: `{"request":"REDACTED","response":"REDACTED-code-from-email"}` + `Authorization: "Bearer BEEPER-PRIVATE-API-PLEASE-DONT-USE"` header
 - extract the JWT `token` from the response and display it to the user
 
 --
