@@ -44,6 +44,13 @@ Options:
   --help     Show help                                                 [boolean]
 ```
 
+## Announcement Posts
+
+- https://twitter.com/_devalias/status/1663515884575657993
+- https://www.linkedin.com/posts/glenn-devalias-grant_opensource-beeper-matrix-activity-7069282362525675520-VlCb
+- https://www.reddit.com/r/beeper/comments/13vol68/i_built_a_beeper_password_reset_tool_for_login/
+- https://news.ycombinator.com/item?id=36123896
+
 ## Background Context
 
 ### Summarised Notes / Process (and ChatGPT Prompts)
