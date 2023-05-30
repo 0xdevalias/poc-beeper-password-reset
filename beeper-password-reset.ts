@@ -79,9 +79,9 @@ async function loginWithEmail(_email?: string) {
   console.log("Your JWT Token: ", token);
 }
 
-async function loginWithToken(token?: string) {
-  token =
-    token ||
+async function loginWithToken(_token?: string) {
+  const token =
+    _token ??
     (
       await prompts({
         type: "text",
@@ -90,17 +90,34 @@ async function loginWithToken(token?: string) {
       })
     ).token;
 
-  const resp = await fetch(
+  if (!token) throw new Error("Token is required");
+
+  const jwtLoginResponse = await fetch(
     "https://matrix.beeper.com/_matrix/client/v3/login",
     {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ type: "org.matrix.login.jwt", token: token }),
     }
   );
 
-  const data = await resp.json();
-  const { access_token, device_id, user_id } = data;
-  console.log("Your Response: ", JSON.stringify(data, null, 2));
+  const jwtLoginResponseData = await jwtLoginResponse.json();
+  const {
+    user_id: userId,
+    access_token: accessToken,
+    device_id: deviceId,
+  } = jwtLoginResponseData;
+
+  console.log(
+    "JWT Login Response:",
+    JSON.stringify(jwtLoginResponseData, null, 2)
+  );
+
+  console.log("User ID:", userId);
+  console.log("Access Token:", accessToken);
+  console.log("Device ID:", deviceId);
 }
 
 async function resetPassword(
