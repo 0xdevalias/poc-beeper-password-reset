@@ -1,0 +1,20 @@
+{
+  "name": "poc-beeper-password-reset",
+  "version": "0.0.1",
+  "description": "Proof of Concept (PoC) script implementing JWT / email-code based password reset flow for Beeper / Matrix.",
+  "author": "Glenn 'devalias' Grant (https://devalias.net/)",
+  "license": "MIT",
+  "homepage": "https://github.com/0xdevalias/poc-beeper-password-reset#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xdevalias/poc-beeper-password-reset.git"
+  },
+  "bugs": {
+    "url": "https://github.com/0xdevalias/poc-beeper-password-reset/issues"
+  },
+  "main": "beeper-password-reset.ts",
+  "scripts": {
+    "start": "tsx beeper-password-reset.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
