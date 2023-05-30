@@ -121,12 +121,12 @@ async function loginWithToken(_token?: string) {
 }
 
 async function resetPassword(
-  access_token?: string,
-  jwt_token?: string,
-  new_password?: string
+  _accessToken?: string,
+  _jwtToken?: string,
+  _newPassword?: string
 ) {
-  access_token =
-    access_token ||
+  const accessToken =
+    _accessToken ??
     (
       await prompts({
         type: "text",
@@ -135,8 +135,10 @@ async function resetPassword(
       })
     ).access_token;
 
-  jwt_token =
-    jwt_token ||
+  if (!accessToken) throw new Error("Access token is required");
+
+  const jwtToken =
+    _jwtToken ??
     (
       await prompts({
         type: "text",
@@ -145,8 +147,10 @@ async function resetPassword(
       })
     ).jwt_token;
 
-  new_password =
-    new_password ||
+  if (!jwtToken) throw new Error("JWT token is required");
+
+  const newPassword =
+    _newPassword ??
     (
       await prompts({
         type: "password",
@@ -155,38 +159,46 @@ async function resetPassword(
       })
     ).new_password;
 
-  let resp = await fetch(
+  if (!newPassword) throw new Error("New password is required");
+
+  const userInteractiveAuthenticationFlowsResponse = await fetch(
     "https://matrix.beeper.com/_matrix/client/v3/account/password",
     {
       method: "POST",
-      headers: { Authorization: `Bearer ${access_token}` },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({}),
     }
   );
 
-  let data = await resp.json();
-  const session = data.session;
-  const flow = data.flows.find((f: any) =>
+  const { session, flows } =
+    await userInteractiveAuthenticationFlowsResponse.json();
+
+  const hasJwtFlow = flows.find((f) =>
     f.stages.includes("org.matrix.login.jwt")
   );
-  if (!flow) throw new Error("Invalid flow");
 
-  resp = await fetch(
-    "https://matrix.beeper.com/_matrix/client/v3/account/password",
-    {
-      method: "POST",
-      headers: { Authorization: `Bearer ${access_token}` },
-      body: JSON.stringify({
-        auth: {
-          type: "org.matrix.login.jwt",
-          token: jwt_token,
-          session: session,
-        },
-        new_password: new_password,
-        logout_devices: false,
-      }),
-    }
-  );
+  if (!hasJwtFlow)
+    throw new Error("Matrix server doesn't seem to support JWT flow");
+
+  await fetch("https://matrix.beeper.com/_matrix/client/v3/account/password", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      auth: {
+        type: "org.matrix.login.jwt",
+        token: jwtToken,
+        session: session,
+      },
+      new_password: newPassword,
+      logout_devices: false,
+    }),
+  });
 
   console.log("Password reset successfully");
 }
