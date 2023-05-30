@@ -1,8 +1,24 @@
 #!/usr/bin/env node_modules/.bin/tsx
 
-import { default as fetch } from "node-fetch";
+import { default as originalFetch } from "node-fetch";
 import yargs from "yargs";
 import prompts from "prompts";
+
+const DEBUG = ["1", "true"].includes(process.env.DEBUG) ?? false;
+
+async function debugFetch(url: string, options: any) {
+  console.debug("[fetch]", url, options);
+
+  const response = await originalFetch(url, options);
+
+  console.debug("[fetch] Response status:", response.status);
+  console.debug("[fetch] Response headers:", response.headers.raw());
+  console.debug("[fetch] Response body:", await response.clone().text());
+
+  return response;
+}
+
+const fetch = DEBUG ? debugFetch : originalFetch;
 
 async function loginWithEmail(email?: string) {
   email =
