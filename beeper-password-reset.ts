@@ -245,4 +245,4 @@ yargs
     }
   )
   .demandCommand(1, "") // Require at least 1 command, show no error message
-  .help().argv;
+  .alias("help", "h").argv;
