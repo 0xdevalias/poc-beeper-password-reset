@@ -44,6 +44,10 @@ Options:
   --help     Show help                                                 [boolean]
 ```
 
+**Note:** If your account doesn't have a password, you can also create one by contacting Beeper Help and asking for a temporary password to log into another client. You can then use the password they give you and change it to one of your choice in the settings, so you can later use it to log in:
+
+![image](https://github.com/0xdevalias/poc-beeper-password-reset/assets/86537048/c96a8b48-257c-4abb-867e-d3d209811a55)![image](https://github.com/0xdevalias/poc-beeper-password-reset/assets/86537048/d4470f6e-c51d-4580-86b2-d88e304d994e)
+
 ## Announcement Posts
 
 - https://twitter.com/_devalias/status/1663515884575657993
