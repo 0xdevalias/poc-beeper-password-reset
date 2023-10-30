@@ -6,6 +6,10 @@ Proof of Concept (PoC) script implementing JWT / email-code based password reset
 
 **WARNING:** Use this at your own risk, there might be bugs; if the flows aren't implemented correctly you may end up logging out all of your existing devices, and if you haven't backed up your encryption keys you may lose access to your encrypted messages. You use this tool at your own risk.
 
+## For Beeper users who just want to get a password set by support (without needing to use this tool)
+
+For Beeper users seeking a straightforward way to set a password without using this tool: Contact Beeper Support directly and request "a temporary password for use with an alternate client". Beeper Support should then assist you in establishing a temporary credential, which you can then update to a permanent, self-chosen password via the client's settings. This process allows you to set up a new password with ease and security.
+
 ## Usage
 
 First you will need to run:
@@ -19,7 +23,7 @@ Then you can use the script as follows:
 ```shell
 ./beeper-password-reset.ts --help
 
-./beeper-password-reset.ts --version 
+./beeper-password-reset.ts --version
 
 ./beeper-password-reset.ts login-email --email user@example.com
 
@@ -43,10 +47,6 @@ Options:
   --version  Show version number                                       [boolean]
   --help     Show help                                                 [boolean]
 ```
-
-**Note:** If your account doesn't have a password, you can also create one by contacting Beeper Help and asking for a temporary password to log into another client. You can then use the password they give you and change it to one of your choice in the settings, so you can later use it to log in:
-
-![image](https://github.com/0xdevalias/poc-beeper-password-reset/assets/86537048/c96a8b48-257c-4abb-867e-d3d209811a55)![image](https://github.com/0xdevalias/poc-beeper-password-reset/assets/86537048/d4470f6e-c51d-4580-86b2-d88e304d994e)
 
 ## Announcement Posts
 
